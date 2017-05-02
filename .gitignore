@@ -6,6 +6,10 @@
 # Folders
 _obj
 _test
+idea
+.idea
+.idea/
+
 
 # Architecture specific extensions/prefixes
 *.[568vq]
