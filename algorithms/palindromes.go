@@ -7,32 +7,26 @@ import (
 	"os"
 	"github.com/douglasmakey/golang-algorithms-/utils"
 	"time"
+	"math"
 )
 
-func isPalindrome(s string) (result bool) {
+func isPalindrome(s string) bool {
 	defer utils.TimeTrack(time.Now(), "isPalindrome")
 
 	// Remove space of sentence
 	s = fmt.Sprint(strings.Join((strings.Split(s, " ")), ""))
-	// Init and set position
-	var i, l int
-	l = (len(s) - 1)
 
-	result = true
-	for l/2 != 0 && result {
-		if s[i] == s[l] {
-			result = true
-			i++
-			l--
-		} else {
-			result = false
+	// Init len and mid
+	l := len(s)
+	m := int(math.Floor(float64(l / 2)))
+	for i := 0; i < m; i++ {
+		if s[i] != s[l-1-i] {
+			return false
 		}
 	}
 
-	return
-
+	return true
 }
-
 
 
 func main() {
