@@ -18,7 +18,7 @@ var (
 	address = flag.String("address", ":3001", "Server port")
 )
 
-func ChannelsKeeper(c chan chan string) {
+func ChannelsKeeper(c chan string) {
 	channels := list.New()
 
 	go func() {
@@ -44,7 +44,7 @@ func InitSignalHandlers(s chan os.Signal) {
 	}()
 }
 
-func LonPollingHandler(c chan chan string) func(w http.ResponseWriter, r *http.Request) {
+func LongPollingHandler(c chan string) func(w http.ResponseWriter, r *http.Request) {
 	return func(w http.ResponseWriter, r *http.Request) {
 		// Set Headers
 		w.Header().Set("Access-Control-Allow-Origin", "*")
@@ -68,7 +68,7 @@ func LonPollingHandler(c chan chan string) func(w http.ResponseWriter, r *http.R
 		// Create [for] and execute code for obtain the data of what your want return it
 
 		// Notify clients new client
-		c <- message
+		c <- "New Client"
 
 		select {
 		case <-time.After(60e9):
@@ -86,8 +86,8 @@ func LonPollingHandler(c chan chan string) func(w http.ResponseWriter, r *http.R
 	}
 }
 
-func CreateHttpServer(clients chan chan string) {
-	http.HandleFunc("/", LonPollingHandler(clients))
+func CreateHttpServer(clients chan  string) {
+	http.HandleFunc("/", LongPollingHandler(clients))
 	log.Println("ListenOn " + *address)
 	err := http.ListenAndServe(*address, nil)
 	if err != nil {
@@ -101,7 +101,7 @@ func main() {
 	flag.Parse()
 
 	// Create channels
-	clients := make(chan chan string, 1)
+	clients := make(chan string, 1)
 	signals := make(chan os.Signal, 1)
 
 	// Registers the given channel to receive notifications of the specified signals.
