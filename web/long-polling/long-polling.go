@@ -18,22 +18,22 @@ var (
 	address = flag.String("address", ":3001", "Server port")
 )
 
-func ChannelsKeeper(c chan string) {
-	channels := list.New()
+func ChannelsKeeper(c <-chan string) {
+	listClients := list.New()
 
 	go func() {
 		for {
 			select {
 			case nc := <-c:
 				// Inserts a new client at the back of list clients and returns client
-				channels.PushBack(nc)
-				fmt.Printf("New client: %d\n", channels.Len())
+				listClients.PushBack(nc)
+				fmt.Printf("New client: %d\n", listClients.Len())
 			}
 		}
 	}()
 }
 
-func InitSignalHandlers(s chan os.Signal) {
+func InitSignalHandlers(s <-chan os.Signal) {
 	go func() {
 		sig := <-s
 		switch sig {
@@ -44,7 +44,7 @@ func InitSignalHandlers(s chan os.Signal) {
 	}()
 }
 
-func LongPollingHandler(c chan string) func(w http.ResponseWriter, r *http.Request) {
+func LongPollingHandler(c chan<- string) func(w http.ResponseWriter, r *http.Request) {
 	return func(w http.ResponseWriter, r *http.Request) {
 		// Set Headers
 		w.Header().Set("Access-Control-Allow-Origin", "*")

@@ -3,6 +3,7 @@
 
 ### Algorithms
 - Palindromes
+- NumberPrime with goroutines and channels
 ### Encoding
 - Base62
 ### Sorting
