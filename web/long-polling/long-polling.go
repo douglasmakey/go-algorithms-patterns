@@ -71,7 +71,7 @@ func LongPollingHandler(c chan<- string) func(w http.ResponseWriter, r *http.Req
 		c <- "New Client"
 
 		select {
-		case <-time.After(60e9):
+		case <-time.After(60 * time.Second):
 			// Request Timeout
 			fmt.Println("Timeout")
 			io.WriteString(w, "Timeout!\n")
@@ -81,7 +81,10 @@ func LongPollingHandler(c chan<- string) func(w http.ResponseWriter, r *http.Req
 		case <- cn.CloseNotify():
 			// Client closed connection
 			return
-
+		default:
+			// Enter to default
+			fmt.Println("Pass default")
+			return
 		}
 	}
 }
@@ -96,8 +99,6 @@ func CreateHttpServer(clients chan  string) {
 }
 
 func main() {
-	// Set proc
-	runtime.GOMAXPROCS(runtime.NumCPU() * 2 + 1)
 	flag.Parse()
 
 	// Create channels
