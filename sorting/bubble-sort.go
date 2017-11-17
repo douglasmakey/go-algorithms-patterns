@@ -3,7 +3,7 @@ package main
 import (
 	"fmt"
 	"time"
-	"github.com/douglasmakey/golang-algorithms-/utils"
+	"github.com/douglasmakey/go-algorithms-patterns/utils"
 )
 
 func bubbleSort(a []int) {

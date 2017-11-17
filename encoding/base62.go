@@ -42,7 +42,10 @@ func main()  {
 	encode := Encode(1600000000)
 	fmt.Println("Encode: ", encode)
 
-	decode := Decode(encode)
+	decode, err := Decode(encode)
+	if err != nil {
+		fmt.Println(err)
+	}
 	fmt.Println("Decode: ", decode)
 
 

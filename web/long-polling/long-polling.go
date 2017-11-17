@@ -9,7 +9,6 @@ import (
 	"net/http"
 	"os"
 	"os/signal"
-	"runtime"
 	"syscall"
 	"time"
 )
@@ -50,12 +49,12 @@ func LongPollingHandler(c chan<- string) func(w http.ResponseWriter, r *http.Req
 		w.Header().Set("Access-Control-Allow-Origin", "*")
 
 		// We are going to return json:
-		w.Header().Set("Content-Type", "application/json")
+		//w.Header().Set("Content-Type", "application/json")
 
 		// Don't cache response:
-		w.Header().Set("Cache-Control", "no-cache, no-store, must-revalidate") // HTTP 1.1.
-		w.Header().Set("Pragma", "no-cache")                                   // HTTP 1.0.
-		w.Header().Set("Expires", "0")
+		//w.Header().Set("Cache-Control", "no-cache, no-store, must-revalidate") // HTTP 1.1.
+		//w.Header().Set("Pragma", "no-cache")                                   // HTTP 1.0.
+		//w.Header().Set("Expires", "0")
 
 		//CloseNotify returns a channel that receives at most a
 		// single value (true) when the client connection has gone

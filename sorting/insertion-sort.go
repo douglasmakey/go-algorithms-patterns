@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-	"github.com/douglasmakey/golang-algorithms-/utils"
+	"github.com/douglasmakey/go-algorithms-patterns/utils"
 	"time"
 )
 
